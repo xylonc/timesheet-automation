@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import timesheets
+from .models import Timesheet
 
-admin.site.register(timesheets)
-
+admin.site.register(Timesheet)

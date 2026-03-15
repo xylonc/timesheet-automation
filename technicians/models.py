@@ -1,6 +1,6 @@
 from django.db import models
 
-class Technicians(models.Model):
+class Technician(models.Model):
     technician_name = models.CharField(("technician name"), max_length= 50)
     tech_email = models.CharField(("Serviceman email") , max_length=100)
     tech_phone = models.CharField(("Serviceman phone"), max_length=8)

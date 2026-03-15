@@ -1,10 +1,10 @@
 from django.db import models
 from customers.models import Customer
-from technicians.models import Technicians
+from technicians.models import Technician
 
-class Timesheets(models.Model):
+class Timesheet(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    technicians = models.ForeignKey(Technicians, on_delete=models.CASCADE)
+    technicians = models.ForeignKey(Technician, on_delete=models.CASCADE)
 
     job_date = models.DateField()
 
