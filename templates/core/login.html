@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
 <body>
-    <h1>Login</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Log in</button>
-    </form>
+    {% if request.path != '/accounts/login/' %}
+    <div class="navbar">
+        ...
+    </div>
+    {% endif %}
 
-    <p><a href="/">Back to Home</a></p>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
 </body>
-</html>

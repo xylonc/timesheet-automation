@@ -4,7 +4,7 @@ from technicians.models import Technician
 
 class Timesheet(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    technicians = models.ForeignKey(Technician, on_delete=models.CASCADE)
+    technician = models.ForeignKey(Technician, on_delete=models.CASCADE)
 
     job_date = models.DateField()
 

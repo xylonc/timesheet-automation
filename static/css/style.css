@@ -1,0 +1,75 @@
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #1e293b;
+    padding: 15px;
+}
+
+.navbar a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: 30px auto;
+}
+
+/* Headings */
+h1, h2 {
+    color: #1e293b;
+}
+
+/* Buttons */
+button, .btn {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover, .btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Forms */
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #e2e8f0;
+}
