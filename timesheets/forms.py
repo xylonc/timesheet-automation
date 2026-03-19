@@ -1,9 +1,9 @@
 from django import forms 
 from .models import Timesheet
 
-class CreateTimeSheetForms(forms.ModelForm):
+class TimeSheetForms(forms.ModelForm):
     class Meta:
         model = Timesheet
-        fields = ['customer','technician','job_date','issue reported','actions_taken','end_time' ]
+        fields = ['customer','technician','job_date','issue_reported','actions_taken','end_time' ]
 
         
