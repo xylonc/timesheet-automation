@@ -14,7 +14,7 @@ class Timesheet(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
 
-    hours_worked = models.FloatField()
+    # hours_worked = models.FloatField()
 
     created_at = models.DateTimeField(auto_now_add=True)
 
