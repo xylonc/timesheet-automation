@@ -22,3 +22,23 @@
 # Design 
 For the first MVP will be 3 relational tables(jobs , servicemen and customers)
 Jobs will be centre of the data base, where customers and servicemen will have on to many relationship with 
+
+
+## MVP 1
+- Simple CRUD features
+- Three models 
+    1. Customer
+    2. Technician
+    3. Timesheet
+- Must have a customer and technician alredy created -> then timesheet creation choose from already created customer and technician
+
+### Next step 
+- Next MVP focuses on the authentication 
+- Also add on to the timesheet feature to see in more detail the issue reported etc 
+- only allow admin create 
+- technicians can only see what they are assigned to 
+- Have a nav to admin 
+
+### Unfinished potential add ons
+- Status completion button 
+
