@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('createtimesheet/', views.CreateTimeSheetForm , name ='create_timesheet'),
+    path('', views.timesheet_list, name='timesheet_list'),
+    path('createtimesheet/', views.create_timesheet , name ='create_timesheet'),
 ]

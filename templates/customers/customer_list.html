@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Customers</h1>
+<a href="{% url 'create_customer' %}" class="btn">+ Add New Customer</a>
+
+<br><br>
+
+{% if customers %}
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact Person</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Added On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.company_name }}</td>
+                <td>{{ customer.contact_person }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.created_at|date:"d M Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No customers found.</p>
+{% endif %}
+
+{% endblock %}

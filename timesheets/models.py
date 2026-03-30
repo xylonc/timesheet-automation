@@ -3,6 +3,12 @@ from customers.models import Customer
 from technicians.models import Technician
 
 class Timesheet(models.Model):
+    
+    class Status(models.TextChoices):
+        IN_PROGRESS = 'in_progress' , 'In Progress'
+        COMPLETED = 'completed' , 'Completed'
+    
+    status = models.CharField(max_length=20,choices = Status.choices, default= Status.IN_PROGRESS)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     technician = models.ForeignKey(Technician, on_delete=models.CASCADE)
 
@@ -13,6 +19,8 @@ class Timesheet(models.Model):
 
     start_time = models.TimeField()
     end_time = models.TimeField()
+    
+
 
     # hours_worked = models.FloatField()
 
