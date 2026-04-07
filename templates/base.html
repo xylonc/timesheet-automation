@@ -1,38 +1,48 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
+{% load static %}
+<html lang="en">
 <head>
-    <title>Timesheet System</title>
-
-    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
-
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Timesheet Automation
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
 </head>
-
 <body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <a href="/">Home</a>
-        <a href="/customers/">Customers</a>
-        <a href="/technicians/">Technicians</a>
-        <a href="/timesheets/">Timesheets</a>
-
-        <span style="float:right;">
-            {% if user.is_authenticated %}
-                Hello, {{ user.username }} |
-                <a href="/accounts/logout/">Logout</a>
-            {% else %}
-                <a href="/accounts/login/">Login</a>
-            {% endif %}
-        </span>
-    </div>
-
-    <!-- Main content -->
-    <div class="container">
+    <nav>
+        <a href="{% url 'home' %}">
+            <span role="img" aria-label="Home" title="Home">Home</span>
+        </a>  
+        {% if user.is_authenticated %}
+            <a href="{% url 'customer_list' %}">
+                <span role="img" aria-label="Customers" title="Customers">Customers</span>
+            </a> |
+            <a href="{% url 'technicians_list'%}">
+                <span role="img" aria-label="Technicians" title="Technicians">Technician</span>
+            </a> | 
+            <a href="{% url 'timesheet_list' %}">
+                <span role="img" aria-label="Timesheets" title="Timesheets">Timesheets</span>
+            </a> |  
+            <form class="logout" action="{% url 'users:logout_view' %}" method="post">
+                {% csrf_token %} 
+                <button class="logout-button" aria-label="User Logout" title="User Logout">👋</button>
+            </form>
+        {% else %}
+            <a href="{% url 'users:register_view' %}">
+                <span role="img" aria-label="User Registration" title="User Registration">🚀</span>
+            </a> | 
+            <a href="{% url 'users:login_view' %}">
+                <span role="img" aria-label="User Login" title="User Login">🔏</span>
+            </a>
+        {% endif %}
+    </nav>
+    <main>
         {% block content %}
         {% endblock %}
-    </div>
-
+    </main>
 </body>
 </html>

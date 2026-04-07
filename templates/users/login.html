@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>Login</h1>
-    <form action="{% url 'login_view' %}" method="post">
+    <form action="{% url 'users:login_view' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <button class="form-submit">Submit</button>
