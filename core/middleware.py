@@ -9,6 +9,8 @@ class LoginRequiredMiddleware:
     def __call__(self,request):
         exempt_urls = [
             settings.LOGIN_URL,
+            '/admin/',
+            '/static/'
         ]
         if not request.user.is_authenticated:
             if not any(request.path.startswith(url) for url in exempt_urls):
