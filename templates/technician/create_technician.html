@@ -5,7 +5,13 @@
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    <h2>Account Details</h2>
+    {{ user_form.as_p }}
+
+    <h2>Technician Details</h2>
+    {{ tech_form.as_p }}
+    
     <button type="submit">Submit</button>
 </form>
 {% endblock %}
