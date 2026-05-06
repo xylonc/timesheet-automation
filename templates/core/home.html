@@ -1,12 +1,5 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Welcome to Timesheet System</h1>
-
-{% if user.is_authenticated %}
-    <p>Hello, {{ user.username }}</p>
-{% else %}
-    <p>Please log in</p>
-{% endif %}
-
+<h1>Welcome, {{ user.username }}</h1>
 {% endblock %}
