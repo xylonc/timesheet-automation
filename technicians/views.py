@@ -1,8 +1,8 @@
 from django.shortcuts import render , redirect
-from .form import TechnicianForm
+from .forms import TechnicianForm
 from .models import Technician
 from django.db import transaction
-from users.models import User , UserProfile
+from users.models import UserProfile
 from users.forms import CustomUserCreationForm
 
 def create_technician(request):
