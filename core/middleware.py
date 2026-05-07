@@ -7,10 +7,14 @@ class LoginRequiredMiddleware:
         self.get_response = get_response
     
     def __call__(self,request):
+        #paths exempt from authentication
         exempt_urls = [
             settings.LOGIN_URL,
             '/admin/',
-            '/static/'
+            '/static/',
+            '/users/password_reset/',
+            '/users/reset/',
+
         ]
         if not request.user.is_authenticated:
             if not any(request.path.startswith(url) for url in exempt_urls):
