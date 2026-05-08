@@ -17,9 +17,46 @@ class LoginRequiredMiddlewareTest(TestCase):
             password='testpass123'
         )
     
+    def test_authenticated_user_granted_access_protected_view(self):
+        """
+        Once user is authenticated must not be redirected out
+        """
+        self.client.login(username='testuser',password='testpass123')
+
+        response = self.client.get(reverse('customer_list'))
+        #Catches middelware redirecting an authenticated user
+        self.assertNotEqual(response.status_code, 302)
+
+    def test_static_file_request_bypass_middleware(self):
+        """
+        Static file should be exempted for the styling
+        """
+        response = self.client.get('/static/css/style.css')
+
+        self.assertNotEqual(response.status_code, 302)
+
+    def test_anonymous_user_can_access_login_page(self):
+        """
+        Login page must be able accessed by unauthorised users 
+        """
+        response = self.client.get(reverse('users:login_view'))
+
+        self.assertEqual(response.status_code , 200)
+        self.assertTemplateUsed(response, 'users/login.html')
+
+    def test_anonymous_user_can_access_password_reset(self):
+        """
+        Login page must be able accessed by unauthorised users 
+        """
+        response = self.client.get(reverse('users:password_reset'))
+
+        self.assertEqual(response.status_code , 200)
+        self.assertTemplateUsed(response, 'users/password_reset.html')
+
+
     def test_anonymous_user_redirected_login(self):
         #hit a protected page as unauthenticated user
-        response = self.client.get('/customers')
+        response = self.client.get(reverse('customer_list'))
 
         # Behaviour 1: it's a redirect
         self.assertEqual(response.status_code, 302)
@@ -31,5 +68,7 @@ class LoginRequiredMiddlewareTest(TestCase):
         # Behaviour 3: the original destination is preserved
         next_param = parse_qs(parsed.query).get('next', [None])[0]
         self.assertIn('customers', next_param)
+    
+
 
 
