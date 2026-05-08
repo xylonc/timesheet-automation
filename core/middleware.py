@@ -10,7 +10,6 @@ class LoginRequiredMiddleware:
         #paths exempt from authentication
         exempt_urls = [
             settings.LOGIN_URL,
-            '/admin/',
             '/static/',
             '/users/password_reset/',
             '/users/reset/',
