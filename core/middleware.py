@@ -20,10 +20,7 @@ class LoginRequiredMiddleware:
         
         #static file bypass cannot use resolver 
         if request.path.startswith(settings.STATIC_URL):
-            return self.get_response(request)
-
-        #paths exempt from authentication
-        
+            return self.get_response(request)        
         try:
             match = resolve(request.path_info)
             if match.view_name in EXEMPT_VIEW_NAMES:
