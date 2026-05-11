@@ -2,8 +2,9 @@ from django.shortcuts import render , redirect
 from .forms import TechnicianForm
 from .models import Technician
 from django.db import transaction
-from users.models import UserProfile
 from users.forms import CustomUserCreationForm
+from django.contrib.auth.models import Group
+from core.permissions import Roles
 
 def create_technician(request):
     if request.method == "POST":
@@ -12,13 +13,10 @@ def create_technician(request):
         if user_form.is_valid() and tech_form.is_valid():
             with transaction.atomic():
                 user = user_form.save()
-                UserProfile.objects.create(
-                    user=user,
-                    role=UserProfile.Role.TECHNICIAN
-                )
                 tech = tech_form.save(commit=False)
                 tech.user = user
                 tech.save()
+                user.groups.add(Group.objects.get(name=Roles.TECHNICIAN))
             return redirect('technicians_list')
     else:
         tech_form = TechnicianForm()
