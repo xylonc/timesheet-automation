@@ -15,7 +15,7 @@ def create_timesheet(request):
     return render(request, 'timesheet/create_timesheet.html', {'form':form})
 
 def timesheet_list(request):
-    timesheets = Timesheet.objects.all()
+    timesheets = Timesheet.objects.visible_to(request.user)
     return render(request, 'timesheet/timesheet_list.html', {'timesheets': timesheets})
     
 
