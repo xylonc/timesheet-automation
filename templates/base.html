@@ -25,9 +25,12 @@
             <a href="{% url 'timesheet_list' %}">
                 <span role="img" aria-label="Timesheets" title="Timesheets">Timesheets</span>
             </a> |
+            <a href="{% url 'users:create_admin'%}">
+                <span role="img" aria-label="Admins" title="Admins">Admins</span>
+            </a> |
             <form class="logout" action="{% url 'users:logout_view' %}" method="post">
                 {% csrf_token %}
-                <button class="logout-button" aria-label="User Logout" title="User Logout">👋</button>
+                <button class="logout-button" aria-label="User Logout" title="User Logout">Logout</button>
             </form>
         {% endif %}
     </nav>

@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse 
 from urllib.parse import urlparse, parse_qs
+from .permissions import Roles
+from django.contrib.auth.models import Group
 
 User = get_user_model()
 
@@ -69,6 +71,28 @@ class LoginRequiredMiddlewareTest(TestCase):
         next_param = parse_qs(parsed.query).get('next', [None])[0]
         self.assertIn('customers', next_param)
     
+class RoleRequiredMiddlewareTest(TestCase):
+    def setUp(self):
+        self.admin = User.objects.create_user(username='xylonadmin', password='pw12345')
+        self.tech = User.objects.create_user(username='xylontech', password='pw12345')
+        
+        self.admin.groups.add(Group.objects.get(name=Roles.ADMIN))
+        self.tech.groups.add(Group.objects.get(name=Roles.TECHNICIAN))
 
+    def test_Admin_access_create_technician(self):
+        self.client.login(username="xylonadmin",password="pw12345")
+
+        response = self.client.get(reverse('create_technician'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='technician/create_technician.html')
+    
+    def test_technician_cannot_access_create_technician(self):
+        self.client.login(username='xylontech' , password='pw12345')
+
+        response = self.client.get(reverse('create_technician'))
+
+        self.assertEqual(response.status_code, 403)
+        self.assertTemplateNotUsed(response, template_name='technician/create_technician.html')
 
 

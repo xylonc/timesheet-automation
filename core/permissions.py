@@ -9,5 +9,6 @@ ROLE_RULES = {
         'create_customer':{Roles.ADMIN},
         'home':{Roles.ADMIN,Roles.TECHNICIAN},
         'create_timesheet':{Roles.ADMIN},
-        'timesheet_list':{Roles.ADMIN , Roles.TECHNICIAN}
+        'timesheet_list':{Roles.ADMIN , Roles.TECHNICIAN},
+        'users:create_admin':{Roles.ADMIN},
 }
