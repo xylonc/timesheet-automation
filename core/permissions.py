@@ -3,7 +3,7 @@ class Roles:
     TECHNICIAN = 'Technician'
     
 ROLE_RULES = {
-        'technicians_list':{Roles.ADMIN,Roles.TECHNICIAN},
+        'technicians_list':{Roles.ADMIN},
         'create_technician':{Roles.ADMIN},
         'customer_list':{Roles.ADMIN,Roles.TECHNICIAN},
         'create_customer':{Roles.ADMIN},
