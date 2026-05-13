@@ -14,6 +14,8 @@ class Customer(models.Model):
     phone = models.CharField(max_length=50)
     address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    customer_email = models.EmailField(blank=True)
+    
     
     def __str__(self): 
         return self.company_name
