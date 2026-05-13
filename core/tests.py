@@ -68,6 +68,7 @@ class LoginRequiredMiddlewareTest(TestCase):
         self.assertEqual(parsed.path, '/users/login/')
         
         # Behaviour 3: the original destination is preserved
+        # Redirected URL contains next param so we must parse the URL
         next_param = parse_qs(parsed.query).get('next', [None])[0]
         self.assertIn('customers', next_param)
     
