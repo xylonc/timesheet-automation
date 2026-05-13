@@ -25,5 +25,5 @@ def create_technician(request):
     return render(request , 'technician/create_technician.html' , {'user_form':user_form, 'tech_form':tech_form})
 
 def technicians_list(request):
-    technicians = Technician.objects.all()
+    technicians = Technician.objects.visible_to(request.user)
     return render(request, 'technician/technician_list.html', {'technicians':technicians})
