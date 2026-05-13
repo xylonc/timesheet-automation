@@ -14,5 +14,5 @@ def create_customer(request):
     return render(request, 'customers/create_customer.html', {'form': form})  
 
 def customer_list(request):
-    customers = Customer.objects.all()
+    customers = Customer.objects.visible_to(request.user)
     return render(request, 'customers/customer_list.html', {'customers': customers})

@@ -6,6 +6,7 @@ from customers.models import Customer
 from technicians.models import Technician
 from .models import Timesheet
 from core.permissions import Roles
+from django.urls import reverse 
 
 User = get_user_model()
 
@@ -55,3 +56,14 @@ class TimesheetVisibilityTest(TestCase):
         superuser = User.objects.create_superuser(username='su', password='pw')
         visible = Timesheet.objects.visible_to(superuser)
         self.assertEqual(visible.count(), 2)
+
+    def test_technician_see_only_own_timesheet_in_timesheet_list(self):
+        self.client.login(username='techa', password='pw')
+        response = self.client.get(reverse('timesheet_list'))
+
+        self.assertEqual(response.status_code, 200)
+        timesheets_in_response = response.context['timesheets']
+        self.assertEqual(timesheets_in_response.count(), 1)
+        self.assertIn(self.timesheet_a, timesheets_in_response)
+        self.assertNotIn(self.timesheet_b, timesheets_in_response)
+
