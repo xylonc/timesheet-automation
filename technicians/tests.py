@@ -14,11 +14,10 @@ class CreateTechnicianTransactionTest(TestCase):
         self.admin = User.objects.create_user(username='admin1', password='pw')
         self.admin.groups.add(Group.objects.get(name=Roles.ADMIN))
         self.client.login(username='admin1', password='pw')
-        logged_in = self.client.login(username='admin1', password='pw')
         self.user_count_before = User.objects.count()
         self.tech_count_before = Technician.objects.count()
 
-    def test_invalid_form_no_oprhan(self):
+    def test_invalid_form_no_orphan(self):
         payload = {
             'username': 'newtech',
             'password1': 'somestrongpassword123',
