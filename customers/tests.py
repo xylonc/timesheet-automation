@@ -60,8 +60,11 @@ class CustomerVisibilityTest(TestCase):
         visible_b = Customer.objects.visible_to(self.tech_user_b)
         
 
-        self.assertEqual(visible_a.count(),1)
-        self.assertEqual(visible_b.count(),1)
+        self.assertIn(self.customer_a, visible_a)
+        self.assertNotIn(self.customer_b, visible_a)
+        self.assertIn(self.customer_b, visible_b)
+        self.assertNotIn(self.customer_a, visible_b)
+
 
     def test_technician_can_only_see_customers_assigned_to_them_in_view(self):
         self.client.login(username='techa' , password='pw')
