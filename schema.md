@@ -30,15 +30,13 @@ Jobs will be centre of the data base, where customers and servicemen will have o
     1. Customer
     2. Technician
     3. Timesheet
-- Must have a customer and technician alredy created -> then timesheet creation choose from already created customer and technician
 
-### Next step 
-- Next MVP focuses on the authentication 
-- Also add on to the timesheet feature to see in more detail the issue reported etc 
-- only allow admin create 
-- technicians can only see what they are assigned to 
-- Have a nav to admin 
+### Process 
+- Company gets a servicing request 
+- Admin creates a customer user
+- Admin fills in the details of the customer and generates a service report 
+- The service report is assigned to a customer and a technician
+- The technician heads down 
 
-### Unfinished potential add ons
-- Status completion button 
+
 
