@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     
     "customers",
     'technicians',
-    'timesheets',
+    'service_reports',
     'invoices',
     'core',
     'users',
