@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from datetime import date, time
 from customers.models import Customer
 from technicians.models import Technician
-from timesheets.models import Timesheet
+from service_reports.models import service_reports
 from core.permissions import Roles
 from django.urls import reverse 
 
