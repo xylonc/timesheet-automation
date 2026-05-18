@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Timesheet
+from .models import ServiceReport
 
-admin.site.register(Timesheet)
+admin.site.register(ServiceReport)

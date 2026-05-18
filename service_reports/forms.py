@@ -1,7 +1,18 @@
-from django import forms 
-from .models import Timesheet
+from django import forms
+from .models import ServiceReport
 
-class TimeSheetForms(forms.ModelForm):
+
+class ServiceReportForm(forms.ModelForm):
     class Meta:
-        model = Timesheet
-        fields = ['customer','technician','job_date','issue_reported','actions_taken','start_time','end_time' ]
+        model = ServiceReport
+        fields = [
+            "customer",
+            "technician",
+            "job_date",
+            "issue_reported",
+            "actions_taken",
+            "start_time",
+            "end_time",
+            "equipment_serial",
+            "warranty",
+        ]

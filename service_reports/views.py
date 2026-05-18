@@ -1,22 +1,24 @@
-from django.shortcuts import render , redirect 
-from .forms import TimeSheetForms
-from .models import Timesheet
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import ServiceReportForm
+from .models import ServiceReport
 
-def create_timesheet(request):
-    if request.method == 'POST':
-        form = TimeSheetForms(request.POST)
+
+def create_service_report(request):
+    if request.method == "POST":
+        form = ServiceReportForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('timesheet_list')
+            return redirect("service_report_list")
     else:
-        form = TimeSheetForms()
-    
-    return render(request, 'timesheet/create_timesheet.html', {'form':form})
+        form = ServiceReportForm()
 
-def timesheet_list(request):
-    timesheets = Timesheet.objects.visible_to(request.user)
-    return render(request, 'timesheet/timesheet_list.html', {'timesheets': timesheets})
-    
+    return render(request, "service_reports/create_service_report.html", {"form": form})
 
 
+def service_report_list(request):
+    service_reports = ServiceReport.objects.visible_to(request.user)
+    return render(
+        request,
+        "service_reports/service_report_list.html",
+        {"service_reports": service_reports},
+    )
