@@ -16,9 +16,10 @@ def create_service_report(request):
 
 
 def service_report_list(request):
-    service_reports = ServiceReport.objects.visible_to(request.user)
+    service_reports = ServiceReport.objects.visible_to(request.user).select_related("customer", "technician")
     return render(
         request,
         "service_reports/service_report_list.html",
         {"service_reports": service_reports},
     )
+
