@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from datetime import date, time
 from customers.models import Customer
 from technicians.models import Technician
-from service_reports.models import service_reports
+from service_reports.models import ServiceReport
 from core.permissions import Roles
 from django.urls import reverse 
 
@@ -35,17 +35,17 @@ class CustomerVisibilityTest(TestCase):
             contact_person='Alice', company_name='EcmA', phone='8888888', address='wheresome'
         )
 
-        self.timesheet_a = Timesheet.objects.create(
+        self.service_report_a = ServiceReport.objects.create(
             customer=self.customer_a, technician=self.tech_a,
             job_date=date.today(), issue_reported='x', actions_taken='y',
             start_time=time(9, 0), end_time=time(10, 0)
         )
-        self.timesheet_b = Timesheet.objects.create(
+        self.service_report_b = ServiceReport.objects.create(
             customer=self.customer_b, technician=self.tech_b,
             job_date=date.today(), issue_reported='x', actions_taken='y',
             start_time=time(9, 0), end_time=time(10, 0)
         )
-        self.timesheet_repeat = Timesheet.objects.create(
+        self.service_report_repeat = ServiceReport.objects.create(
             customer=self.customer_b, technician=self.tech_b,
             job_date=date.today(), issue_reported='x', actions_taken='y',
             start_time=time(9, 0), end_time=time(10, 0)
