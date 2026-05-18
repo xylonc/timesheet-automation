@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>Service Reports</h1>
+<a href="{% url 'create_service_report' %}" class="btn">+ Create New Service Report</a>
+
+<br><br>
+
+{% if service_reports %}
+    <table>
+        <thead>
+            <tr>
+                <th>Job ID</th>
+                <th>Customer</th>
+                <th>Technician</th>
+                <th>Job Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service_report in service_reports %}
+            <tr>
+                <td>{{ service_report.service_report_number|default:"-" }}</td>
+                <td>{{ service_report.customer }}</td>
+                <td>{{ service_report.technician|default:"Unassigned" }}</td>
+                <td>{{ service_report.job_date }}</td>
+                <td>{{ service_report.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No service reports found.</p>
+{% endif %}
+
+{% endblock %}
