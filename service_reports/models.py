@@ -61,7 +61,13 @@ class ServiceReport(models.Model):
     def __str__(self):
         return f"Job {self.id} - {self.customer}"
     
-    
+    TRANSITION_PRECONDITIONS = {
+        Status.SUBMITTED: '_check_can_submit',
+        Status.APPROVED: '_check_can_approve',
+        Status.EMAILED: '_check_can_email',
+        Status.SIGNED: '_check_can_sign',
+        Status.CANCELLED: '_check_can_cancel',
+    }
     
     def transition_to(self, new_status, actor):
         allowed = self.ALLOWED_TRANSITIONS.get(self.status, set())
@@ -69,27 +75,33 @@ class ServiceReport(models.Model):
             raise InvalidTransition(
                 f"Cannot transition from {self.status} to {new_status}."
             )
-        self._check_preconditions(new_status, actor)
+        method_name = self.TRANSITION_PRECONDITIONS.get(new_status)
+        if method_name:
+            getattr(self, method_name)(actor) #deferred lookup as we are passing the name of the function not the actual function
+            #Method defined below so we cannot access function name now instead we defer it to a later time when we actually need to call it. 
         self.status=new_status
         self.save(update_fields=['status'])
     
-    def _check_preconditions(self, new_status, actor):
-
+    def _check_can_submit(self,  actor):
         # dispatched to submitted must have the relevant fields filled out
-        if new_status == self.Status.DISPATCHED:
-            if not self.issue_reported:
-                raise TransitionNotAllowed("Issue reported must be filled before dispatching.")
-            elif not self.actions_taken:
-                raise TransitionNotAllowed("Actions taken must be filled before dispatching.")
-            elif not self.equipment_serial:
-                raise TransitionNotAllowed("Equipment serial must be filled before dispatching.")
-            elif not self.start_time or not self.end_time:
-                raise TransitionNotAllowed("Start and end time must be filled before dispatching.")
-
-        # from dispatched to submitted: job date must be set  
-        if new_status == self.Status.SUBMITTED:
-            if not self.job_date:
-                raise TransitionNotAllowed("Job date must be set before submitting.")
-            
+        errors =[]
+        if not self.issue_reported:
+            errors.append("Issue reported must be filled before dispatching.")
+        elif not self.actions_taken:
+            errors.append("Actions taken must be filled before dispatching.")
+        elif not self.equipment_serial:
+            errors.append("Equipment serial must be filled before dispatching.")
+        elif not self.start_time or not self.end_time:
+            errors.append("Start and end time must be filled before dispatching.")
+        if errors:
+            raise TransitionNotAllowed(", ".join(errors))
+    def _check_can_approve(self, actor):
+        # Only admins can approve
+        if not actor.is_superuser and not actor.groups.filter(name=Roles.ADMIN).exists():
+            raise TransitionNotAllowed("Only admins can approve service reports.")
+        if not self.job_date:
+            raise TransitionNotAllowed("Job date must be filled before approving.")
+        if not self.warranty:
+            raise TransitionNotAllowed("Warranty status must be filled before approving.")
         
             
