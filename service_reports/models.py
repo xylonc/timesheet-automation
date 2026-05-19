@@ -28,8 +28,8 @@ class ServiceReport(models.Model):
         Status.SUBMITTED: [Status.APPROVED],
         Status.APPROVED: [Status.EMAILED],
         Status.EMAILED: [Status.SIGNED],
-        Status.SIGNED: [],
-        Status.CANCELLED: [],
+        Status.SIGNED: set(),
+        Status.CANCELLED: set(),
     }
 
     status = models.CharField(
@@ -95,6 +95,7 @@ class ServiceReport(models.Model):
             errors.append("Start and end time must be filled before dispatching.")
         if errors:
             raise TransitionNotAllowed(", ".join(errors))
+        
     def _check_can_approve(self, actor):
         # Only admins can approve
         if not actor.is_superuser and not actor.groups.filter(name=Roles.ADMIN).exists():
@@ -103,5 +104,13 @@ class ServiceReport(models.Model):
             raise TransitionNotAllowed("Job date must be filled before approving.")
         if not self.warranty:
             raise TransitionNotAllowed("Warranty status must be filled before approving.")
+    
+    def _check_can_email(self, actor):
+        if not self.customer.customer_email:
+            raise TransitionNotAllowed("Customer has no email on file")
         
-            
+    def _check_can_sign(self, actor):
+        pass
+    
+    def _check_can_cancel(self, actor):
+        pass 
