@@ -73,3 +73,33 @@
 Only admins have access to the platform
 
 
+### State machine transitions
+- Dispatched
+- Submitted
+- Approved
+- Emailed
+- Signed
+- Cancelled
+#### Dispatched -> Submitted
+- Trigger: Telegram Bot 
+- Precondition: issue_reported, actions_taken, start_time, end_time must all be non-empty
+- Side effect: Notify admin
+#### Dispatched -> Cancelled
+- Trigger: Telegram Bot 
+- Precondition: Customer cancelled
+- Side effect: Technician notify admin as well as customer emails that they want to cancel 
+#### Submitted -> Approved
+- Trigger: Admin fills in remaining information and clicks approved
+- Precondition: Warranty not null 
+- Side effect: Technician notified
+#### Approved -> Emailed
+- Trigger: Admin clicks on email button 
+- Precondition: Customer email is non empty 
+- Side effect: Customer gets the email
+#### Emailed -> Signed
+- Trigger: Admin clicks on signed button
+- Precondition: Signed PDF attached to report 
+- Side effect: Reflected on the status
+
+
+
