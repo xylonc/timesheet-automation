@@ -15,6 +15,7 @@ class Technician(models.Model):
     technician_name = models.CharField(("technician name"), max_length=50)
     tech_phone = models.CharField(("Serviceman phone"), max_length=8)
     is_working = models.BooleanField(default=False)
+    telegram_id = models.BigIntegerField(unique=True,null=True,blank=True)
 
     def __str__(self):
         return self.technician_name
