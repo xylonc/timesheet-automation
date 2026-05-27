@@ -87,11 +87,11 @@ class ServiceReport(models.Model):
         errors =[]
         if not self.issue_reported:
             errors.append("Issue reported must be filled before dispatching.")
-        elif not self.actions_taken:
+        if not self.actions_taken:
             errors.append("Actions taken must be filled before dispatching.")
-        elif not self.equipment_serial:
+        if not self.equipment_serial:
             errors.append("Equipment serial must be filled before dispatching.")
-        elif not self.start_time or not self.end_time:
+        if not self.start_time or not self.end_time:
             errors.append("Start and end time must be filled before dispatching.")
         if errors:
             raise TransitionNotAllowed(", ".join(errors))

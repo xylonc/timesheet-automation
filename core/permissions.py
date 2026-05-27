@@ -12,4 +12,5 @@ ROLE_RULES = {
     "create_service_report": {Roles.ADMIN},
     "service_report_list": {Roles.ADMIN, Roles.TECHNICIAN},
     "users:create_admin": {Roles.ADMIN},
+    "approve_service_report": {Roles.ADMIN}
 }

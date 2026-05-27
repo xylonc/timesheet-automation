@@ -17,6 +17,7 @@
                 <th>Technician</th>
                 <th>Job Date</th>
                 <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,14 @@
                 <td>{{ service_report.technician|default:"Unassigned" }}</td>
                 <td>{{ service_report.job_date }}</td>
                 <td>{{ service_report.get_status_display }}</td>
+                <td>
+                    {% if service_report.status == 'submitted' %}
+                        <form method="post" action="{% url 'approve_service_report' pk=service_report.pk %}">
+                            {% csrf_token %}
+                            <button type="submit">Approve</button>
+                        </form>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

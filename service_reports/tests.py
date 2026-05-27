@@ -163,14 +163,25 @@ class StateMachinePreConditionTest(TestCase):
             self.report.transition_to(ServiceReport.Status.SUBMITTED, actor=None)
     
     def test_submit_fails_without_start_time_reported(self):
-        self.report.start_time = ''
+        self.report.start_time = None
         with self.assertRaises(TransitionNotAllowed):
             self.report.transition_to(ServiceReport.Status.SUBMITTED, actor=None)
 
     def test_submit_fails_without_end_time_reported(self):
-        self.report.end_time = ''
+        self.report.end_time = None
         with self.assertRaises(TransitionNotAllowed):
             self.report.transition_to(ServiceReport.Status.SUBMITTED, actor=None)
     
+class ApproveServiceReportTest(TestCase):
+    def setUp(self):
+        self.admin = User.objects.create_user(username="admin",password='pw')
+        self.admin.groups.add(Group.objects.get(name=Roles.ADMIN))
+
+    
+    def test_post_to_non_existent_service_report_404(self):
+        self.client.login(username='admin',password='pw')
+        reponse = self.client.post(reverse('approve_service_report',kwargs={'pk':99999999}))
+        self.assertEqual(reponse.status_code,404)
+
 
         
